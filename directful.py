@@ -10,7 +10,7 @@ def set_background(url):
         page_bg_img = '''
         <style>
         body {
-            background-image: url("''' + url + '''");
+            background-image: url("''' + "http://melisotel.com.tr/wp-content/uploads/2017/06/B04A6353.jpg" + '''");
             background-size: cover;
         }
         </style>
