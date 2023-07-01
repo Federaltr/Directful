@@ -20,7 +20,7 @@ def set_background(url):
 # Streamlit uygulaması
 def main():
     # Arka plan resminin URL'sini belirleyin
-    background_url = "http://www.blog.sagmart.com/wp-content/uploads/2015/08/Best-Hotel-Room-Views.jpg"
+    background_url = "http://melisotel.com.tr/wp-content/uploads/2017/06/B04A6353.jpg"
     
     # Arka plan resmini ayarlayın
     set_background(background_url)
