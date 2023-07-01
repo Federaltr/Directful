@@ -7,7 +7,7 @@ from PIL import Image
 """img = Image.open("room_image.jpeg")
 st.image(img, caption="room")"""
 
-"""page_bg_img =
+page_bg_img =
 <style>
 body {
 background-image: url("https://static.leonardo-hotels.com/image/leonardohotelbucharestcitycenter_room_comfortdouble2_2022_4000x2600_7e18f254bc75491965d36cc312e8111f_2048x1331_desktop_2.webp");
@@ -15,7 +15,7 @@ background-size: cover;
 }
 </style>
 
-st.markdown(page_bg_img, unsafe_allow_html=True)"""
+st.markdown(page_bg_img, unsafe_allow_html=True)
 
 
 def set_background(url):
