@@ -1,36 +1,80 @@
-
-import numpy as np
-import pandas as pd
 import streamlit as st
-from PIL import Image
+import pickle
+import string
+from nltk.corpus import stopwords
+import nltk
+import os
 
+from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
 
-def set_background(url):
-    if url:
-        page_bg_img = '''
-        <style>
-        body {
-            background-image: url("''' + "http://melisotel.com.tr/wp-content/uploads/2017/06/B04A6353.jpg" + '''");
-            background-size: cover;
-        }
-        </style>
-        '''
-        st.markdown(page_bg_img, unsafe_allow_html=True)
+stop_words = stopwords.words("english")
 
-# Streamlit uygulaması
-def main():
-    # Arka plan resminin URL'sini belirleyin
-    background_url = "http://melisotel.com.tr/wp-content/uploads/2017/06/B04A6353.jpg"
+def cleaning(text):
+ 
+    #1. Tokenize and lower
+    text_tokens = word_tokenize(text.lower()) 
     
-    # Arka plan resmini ayarlayın
-    set_background(background_url)
+    #2. Remove Puncs and numbers
+    tokens_without_punc = [w for w in text_tokens if w.isalpha()]
     
-    # Diğer içeriği ekleyin
-    st.title("Streamlit Web Uygulaması")
-    st.write("Merhaba, dünyaya hoş geldiniz!")
+    #3. Removing Stopwords
+    tokens_without_sw = [t for t in tokens_without_punc if t not in stop_words]
+    
+    #4. lemma
+    text_cleaned = [WordNetLemmatizer().lemmatize(t) for t in tokens_without_sw]
+    
+    #joining
+    return " ".join(text_cleaned)
 
-if __name__ == "__main__":
-    main()
+
+
+vectorizer = pickle.load(open('vectorizer.pkl','rb'))
+model = pickle.load(open("directful_model_new.pkl", "rb"))
+
+st.title("SMS Spam Classifier")
+
+input_sms = st.text_area("Enter the message")
+
+if st.button('Predict'):
+
+    # 1. preprocess
+    cleaning_sms = cleaning(input_sms)
+    # 2. vectorize
+    vector_input = vectorizer.transform([cleaning_sms])
+    # 3. predict
+    result = model.predict(vector_input)[0]
+    # 4. Display
+    if result == 1:
+        st.header("Spam")
+    else:
+        st.header("Not Spam")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
